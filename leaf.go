@@ -22,7 +22,7 @@ func Run(mods ...module.Module) {
 		defer logger.Close()
 	}
 
-	osslogger, err := oss.New("udp", conf.OssLogAddr, "test")
+	osslogger, err := oss.NewLogger("udp", conf.OssLogAddr, "test")
 	if nil != err {
 		log.Error("init oss logger failed:", err.Error())
 		return

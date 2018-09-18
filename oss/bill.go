@@ -3,22 +3,21 @@ package oss
 import (
 	"time"
 	"fmt"
-	"log/syslog"
 )
 
 type Logger struct {
-	*syslog.Writer
+	writer
 }
 
 var gLogger *Logger
 
-func New(network, addr, tag string) (*Logger, error) {
-	var w *syslog.Writer
+func NewLogger(network, addr, tag string) (*Logger, error) {
+	var w writer
 	var err error
 	if "" == addr {
-		w, err = syslog.New(syslog.LOG_INFO|syslog.LOG_USER, tag)
+		w, err = New(LOG_INFO|LOG_USER, tag)
 	} else {
-		w, err = syslog.Dial(network, addr, syslog.LOG_INFO|syslog.LOG_USER, tag)
+		w, err = Dial(network, addr, LOG_INFO|LOG_USER, tag)
 	}
 	if nil != err {
 		return nil, err
